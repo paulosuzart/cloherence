@@ -89,4 +89,3 @@
 		[cache e-key]
 		(with-cache cache (get-val e-key)))
 	
-	(extendtype )

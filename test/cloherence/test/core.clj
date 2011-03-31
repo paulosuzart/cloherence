@@ -11,5 +11,5 @@
   	(is 1 (put-val 1 anim1))
 	(is anim1 (get-val 1))
 	(is nil? (put-seq :name animals))
-	(is "Nacho" (:name (get-val "Nacho")))
-	(is "Taco" (:name (remove "Taco")))))
+	(is "Nacho" (:name (get-val "Nacho")))))
+	;(is "Taco" (:name (remove "Taco")))))

@@ -93,10 +93,20 @@
 							(recur 
 								(merge result {(first coll) (second coll)}) (nnext coll)))))))
 	(defn count
+		"Returns the current count of entries"
 		[cache]
 		(.size (get-cache cache)))
 	
 	(defn get
+		"Returns nil if not-found is not suplied for not found entries.
+		 Returns value for e-key."
+		([cache e-key]
+			(with-cache cache (get-val e-key)))
+		([cache e-key not-found]
+			(or (get cache e-key) not-found)))
+
+	(defn contains?
+		"Check if a given key is present. Returns true if present."
 		[cache e-key]
-		(with-cache cache (get-val e-key)))
+		(with-cache cache (.containsKey *cache* e-key)))
 	

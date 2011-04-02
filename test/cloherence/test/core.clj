@@ -12,4 +12,8 @@
 	(is anim1 (get-val 1))
 	(is nil? (put-seq :name animals))
 	(is "Nacho" (:name (get-val "Nacho")))))
-	;(is "Taco" (:name (remove "Taco")))))
+
+(deftest map-semantics
+	(cache-map dogs)
+	(assoc dogs 1 {:name "nina" :breed "Bulldog"}) 
+        (is "nina" (:name (get dogs 1))))

@@ -12,7 +12,7 @@
      cloherence.core
 	(:use [clojure.contrib.def :only [name-with-attributes]])
 	(:import [com.tangosol.net CacheFactory NamedCache]
-			 [com.tangosol.util.processor AbstractProcessor]))
+		 [com.tangosol.util.processor AbstractProcessor]))
 
 
 	(defprotocol PProcessor 
@@ -74,39 +74,4 @@
 	(defmacro with-cache [cache-name & body]
 		`(binding [*cache* (get-cache ~cache-name)]
 			~@body))
-	
-	(defmacro cache-map 
-		[name & kvs]
-    	(let [[name kvs] (name-with-attributes name kvs)]
-			`(do
-      			(def ~name ~(str name)))))
-	
-	(defn assoc
-		([cache e-key e-val]
-			(with-cache cache	
-				(put-val e-key e-val)))
-		([cache e-key e-val & kvs]
-				(.putAll (get-cache cache) 
-					(loop [result {} coll (cons e-key (cons e-val kvs))]
-						(if (empty? coll)
-							result
-							(recur 
-								(merge result {(first coll) (second coll)}) (nnext coll)))))))
-	(defn count
-		"Returns the current count of entries"
-		[cache]
-		(.size (get-cache cache)))
-	
-	(defn get
-		"Returns nil if not-found is not suplied for not found entries.
-		 Returns value for e-key."
-		([cache e-key]
-			(with-cache cache (get-val e-key)))
-		([cache e-key not-found]
-			(or (get cache e-key) not-found)))
 
-	(defn contains?
-		"Check if a given key is present. Returns true if present."
-		[cache e-key]
-		(with-cache cache (.containsKey *cache* e-key)))
-	

@@ -1,5 +1,5 @@
 (ns cloherence.test.core
-  (:use [cloherence.core] :reload)
+  (:use [cloherence core maps] :reload)
   (:use [clojure.test]))
 
 (def anim1 {:name "Nacho" :breed "Bulldog"})
@@ -16,4 +16,8 @@
 (deftest map-semantics
 	(cache-map dogs)
 	(assoc dogs 1 {:name "nina" :breed "Bulldog"}) 
-        (is "nina" (:name (get dogs 1))))
+        (is "nina" (:name (get dogs 1)))
+	(update dogs 1 
+		(fn [e] {:name (.toUpperCase (:name e))
+			 :breed (:breed e)}))
+        (is "NINA" (:name (get dogs 1)))) 

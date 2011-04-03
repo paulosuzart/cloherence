@@ -20,4 +20,9 @@
 	(update dogs 1 
 		(fn [e] {:name (.toUpperCase (:name e))
 			 :breed (:breed e)}))
-        (is "NINA" (:name (get dogs 1)))) 
+        (is "NINA" (:name (get dogs 1)))
+        (inplace-update dogs 1 
+		(fn [e arg] {:name (.toLowerCase (:name e))
+			 :breed (:breed arg)}) "bull")
+	(is "nina" (:name (get dogs 1)))
+	(is "bull" (:breed (get dogs 1)))) 

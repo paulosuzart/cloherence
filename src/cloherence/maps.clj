@@ -55,3 +55,13 @@
 		 Works applying f to respective e-key value"
 		([cache e-key f & args]
 			(assoc cache e-key (apply f (get cache e-key) args))))
+
+	(deftype CljProcessor
+		[f args] java.io.Serializable PProcessor
+		(process [this entry]
+			(apply f (.getValue entry) args)))
+
+	(defn inplace-update
+		[cache e-key f & args]
+		(with-cache cache
+		  (process e-key (cloherence.maps.CljProcessor. f args)))) 
